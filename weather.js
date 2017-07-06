@@ -1,4 +1,4 @@
-const apiURL = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=47.6762&lon=-122.3182&appid=ad57da1720ec07b47db8b59c86aa8c0f"
+const apiURLSeattle = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=47.6762&lon=-122.3182&appid=ad57da1720ec07b47db8b59c86aa8c0f"
 
  
 function getSeattle(){
@@ -6,16 +6,17 @@ function getSeattle(){
  
   //talks to the API
   //request method, url, optional async flag
-  request.open("GET", apiURL, true)
+  request.open("GET", apiURLSeattle, true)
   
   //fires when the request is complete
-  request.onload = (function){
-    let weatherDiv=document.getElementById("Seattle")
+  request.onload = function () {
+    let weatherDiv = document.getElementById("Seattle")
     let response = JSON.parse(request.response)
-    //to get the value of the key in the object, need to use .variable
-    console.log(request.response)
     
-    weatherDiv.innerHTML = response.variable
+    //to get the value of the key in the object
+    console.log(response.temp)
+    
+    weatherDiv.innerHTML = response.temp
   
   }
   
@@ -25,7 +26,7 @@ function getSeattle(){
     console.log(err)
   }
   
-  const apiURL = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=51.5074&lon=-0.1278&appid=ad57da1720ec07b47db8b59c86aa8c0f"
+  const apiURLondon = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=51.5074&lon=-0.1278&appid=ad57da1720ec07b47db8b59c86aa8c0f"
 
  
 function getLondon(){
@@ -33,16 +34,16 @@ function getLondon(){
  
   //talks to the API
   //request method, url, optional async flag
-  request.open("GET", apiURL, true)
+  request.open("GET", apiURLondon, true)
   
   //fires when the request is complete
-  request.onload = (function){
-    let weatherDiv=document.getElementById("London")
+  request.onload = function() {
+    let weatherDiv = document.getElementById("London")
     let response = JSON.parse(request.response)
     //to get the value of the key in the object, need to use .variable
-    console.log(request.response)
+    console.log(response.temp)
     
-    weatherDiv.innerHTML = response.variable
+    weatherDiv.innerHTML = response.temp
   
   }
   
@@ -52,8 +53,6 @@ function getLondon(){
     console.log(err)
   }
   
-  
-  
+
   //send the request
   request.send()
-}
