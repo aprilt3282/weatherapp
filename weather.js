@@ -1,58 +1,65 @@
-const apiURLSeattle = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=47.6762&lon=-122.3182&appid=ad57da1720ec07b47db8b59c86aa8c0f"
+const apiProxy = "https://cors-anywhere.herokuapp.com/"
+const apiURL = "http://api.openweathermap.org/data/2.5/weather"
+const apiKey = "ad57da1720ec07b47db8b59c86aa8c0f"
 
- 
-function getSeattle(){
-  let request = new XMLHttpRequest()
- 
-  //talks to the API
-  //request method, url, optional async flag
-  request.open("GET", apiURLSeattle, true)
+let debug = null
+
+function figWeather(latitude, longitude){
   
-  //fires when the request is complete
-  request.onload = function () {
-    let weatherDiv = document.getElementById("Seattle")
+  let values = {lat: latitude, lon: longitude, appid: apiKey}
+  
+  let queryString = queryBuilder(values)
+  
+  getWeather(queryString)
+}
+
+function getWeather(queryString){
+  let request = XMLHttpRequest()
+  
+}
+
+ //talks to the API
+request.open("GET", apiProxy + apiURL, queryString, true)
+
+
+//fires when the request is complete
+//update the DOM
+request.onload = function () {
+    let weatherDiv = document.getElementById("weather")
     let response = JSON.parse(request.response)
+    console.log(response.weather)
     
-    //to get the value of the key in the object
-    console.log(response.temp)
-    
-    weatherDiv.innerHTML = response.temp
-  
+ // debug = response
+    weatherDiv.innerHTML = " Weather today in : " + response.name + " "
+      + " Description : " + response.weather[0].description
+      + " Temperature (Kelvin): "+ response.main.temp
+      + " Minimum Temperature (Kelvin) : "+ response.main.temp_min
+      + " Maximum Temperature (Kelvin) : "+ response.main.temp_max
   }
-  
-  //fires if something is an error
-  request.onerror = function(errObject){
-    console.log("nice try")
-    console.log(err)
-  }
-  
-  const apiURLondon = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=51.5074&lon=-0.1278&appid=ad57da1720ec07b47db8b59c86aa8c0f"
 
- 
-function getLondon(){
-  let request = new XMLHttpRequest()
- 
-  //talks to the API
-  //request method, url, optional async flag
-  request.open("GET", apiURLondon, true)
-  
-  //fires when the request is complete
-  request.onload = function() {
-    let weatherDiv = document.getElementById("London")
-    let response = JSON.parse(request.response)
-    //to get the value of the key in the object, need to use .variable
-    console.log(response.temp)
+  // fires if something goes wrong
+  request.error = function (errorObject) {
+    console.log("broken :(")
+    console.log(errorObject)
+  }
     
-    weatherDiv.innerHTML = response.temp
-  
-  }
-  
-  //fires if something is an error
-  request.onerror = function(errObject){
-    console.log("nice try")
-    console.log(err)
-  }
-  
-
-  //send the request
+   // send the request!
   request.send()
+
+function queryBuilder(queryObj){
+  let holder = []
+  // loop through queryObj key value pairs
+  for(let key in queryObj){
+   
+ let convert = `${encodeURIComponent(key)}=${encodeURIComponent(queryObj[key])}`
+   
+    holder.push(convert)
+  }
+
+    
+    
+    
+
+
+
+
